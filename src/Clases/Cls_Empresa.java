@@ -73,6 +73,35 @@ public class Cls_Empresa {
         }
         return DT;
     }
+    
+    public Object[] getEmpresa(){
+        
+        Object[] fila = new Object[6];
+        try {
+            setTitulosEmpresa();
+            PS = CN.getConnection().prepareStatement(SQL_SELECT_EMPRESA);
+            RS = PS.executeQuery();
+            
+            while (RS.next()) {
+                fila[0] = RS.getString(1);
+                fila[1] = RS.getDate(2);
+                fila[2] = RS.getString(3);
+                fila[3] = RS.getString(4);
+                fila[4] = RS.getString(5);
+                fila[5] = RS.getString(6);
+               
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al listar los datos." + e.getMessage());
+        } finally {
+            PS = null;
+            RS = null;
+            CN.desconectar();
+        }
+        return fila;
+        
+        
+    }
 
     public int registrarEmpresa(String nit, Date fecha, String email, String direccion, String nombre, String telefono) {
         int res = 0;
