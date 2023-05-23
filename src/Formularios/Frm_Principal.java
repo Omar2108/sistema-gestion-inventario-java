@@ -4,24 +4,24 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 
-public class Frm_Principal extends javax.swing.JFrame {
+public final class Frm_Principal extends javax.swing.JFrame {
 
-    
     public Frm_Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
         setResizable(true);
         txt_menu.requestFocus();
+        getIconImage();
     }
 
     @Override
     public Image getIconImage() {
-       Image retValue = Toolkit.getDefaultToolkit().
-             getImage(ClassLoader.getSystemResource("Imagenes/cheque.png"));
-       
-       return retValue;
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("Imagenes/cheque.png"));
+
+        return retValue;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,6 +44,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         label = new javax.swing.JLabel();
         cargo = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Inventario");
@@ -217,6 +218,15 @@ public class Frm_Principal extends javax.swing.JFrame {
         cargo.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(cargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 40, 100, 20));
 
+        jButton1.setBackground(new java.awt.Color(112, 145, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 0, 40, 30));
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -252,7 +262,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-         
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton6PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jButton6PropertyChange
@@ -276,6 +286,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         escritorio.add(f);
         f.show();
     }//GEN-LAST:event_btn_usuariosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,6 +328,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     public static javax.swing.JLabel cargo;
     public static javax.swing.JPanel contenedor;
     public static javax.swing.JDesktopPane escritorio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -328,7 +344,4 @@ public class Frm_Principal extends javax.swing.JFrame {
     public static javax.swing.JLabel usuario;
     // End of variables declaration//GEN-END:variables
 
-    
-
-   
 }

@@ -6,7 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.UIManager;
 
 
-public class Frm_Login extends javax.swing.JFrame {
+public final class Frm_Login extends javax.swing.JFrame {
     
     private Cls_Login lo;
     
@@ -16,6 +16,7 @@ public class Frm_Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setResizable(true);
         lo = new Cls_Login();
+       getIconImage();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Frm_Login extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sistema de Inventario");
+        setTitle("Sistema de Gestion de Inventario");
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -144,7 +145,7 @@ public class Frm_Login extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 350, 510));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 670));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
