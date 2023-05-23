@@ -30,7 +30,7 @@ public class Cls_Inventario {
         DT.addColumn("Descripción");
         DT.addColumn("Entrada");
         DT.addColumn("Salida");
-        DT.addColumn("Stock");
+        DT.addColumn("Existencia");
         return DT;
     }
     
