@@ -1,11 +1,11 @@
 package Formularios;
 
+import Clases.Cls_Empresa;
 import Clases.Cls_Salida;
 import Clases.CurrencyCellRenderer;
 import java.awt.Dimension;
 import java.text.DecimalFormat;
 import java.util.Date;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,10 +46,10 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
     }
 
     private void iniciar() {
-        txt_nfactura1.setEnabled(false);
+        txt_nsalida.setEnabled(false);
         txt_cantidad.setEnabled(false);
         txt_precio.setEnabled(false);
-        txt_nfactura1.requestFocus();
+        txt_nsalida.requestFocus();
         jdc_fecha.setEnabled(false);
         jbt_buscar.setEnabled(false);
         jbt_guardar.setEnabled(false);
@@ -58,9 +58,9 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
     private void activar() {
         String datosSalida = CP.getFacturaSalida();
         int numFact = Integer.parseInt(datosSalida) + 1;
+        System.out.println("valor de txt_nsalida: " + numFact);
         String numFac = Integer.toString(numFact);
-        txt_nfactura1.setText(numFac);
-        System.out.println("valor de txt_nfactura1: " + txt_nfactura1.getText());
+        txt_nsalida.setText(numFac);
 
         txt_cantidad.setEnabled(true);
         txt_precio.setEnabled(true);
@@ -72,13 +72,13 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
     }
 
     private void limpiar() {
-        txt_nfactura1.setText("");
+        txt_nsalida.setText("");
         txt_codigo.setText("");
         txt_descripcion.setText("");
         txt_cantidad.setText("");
         txt_precio.setText("");
         jdc_fecha.setDate(null);
-        txt_nfactura1.requestFocus();
+        txt_nsalida.requestFocus();
         jtb_salida.clearSelection();
     }
 
@@ -93,7 +93,7 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Debe ingresar el codigo del producto");
             } else {
 
-                String nfac = txt_nfactura1.getText();
+                String nfac = txt_nsalida.getText();
                 String codigo = txt_codigo.getText();
                 int cantidad = Integer.parseInt(txt_cantidad.getText());
                 int precio = Integer.parseInt(txt_precio.getText());
@@ -149,8 +149,8 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txt_precio = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txt_nfactura1 = new javax.swing.JTextField();
         btnReporte = new javax.swing.JButton();
+        txt_nsalida = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Salida");
@@ -240,17 +240,6 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Precio Unitario Producto *");
 
-        txt_nfactura1.setBackground(new java.awt.Color(0, 153, 153));
-        txt_nfactura1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        txt_nfactura1.setForeground(new java.awt.Color(255, 255, 255));
-        txt_nfactura1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_nfactura1.setToolTipText("");
-        txt_nfactura1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_nfactura1ActionPerformed(evt);
-            }
-        });
-
         btnReporte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnReporte.setText("Generar reporte");
         btnReporte.addActionListener(new java.awt.event.ActionListener() {
@@ -258,6 +247,11 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
                 btnReporteActionPerformed(evt);
             }
         });
+
+        txt_nsalida.setBackground(new java.awt.Color(0, 153, 51));
+        txt_nsalida.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        txt_nsalida.setForeground(java.awt.Color.white);
+        txt_nsalida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -302,9 +296,9 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
                         .addGap(78, 78, 78)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txt_nfactura1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(68, 68, 68)
-                                .addComponent(jdc_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_nsalida, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addComponent(jdc_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
                                 .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -329,10 +323,11 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdc_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nfactura1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                    .addComponent(txt_nsalida, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jdc_fecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_precio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -393,8 +388,8 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbt_buscarActionPerformed
 
     private void bt_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_nuevoActionPerformed
-        activar();
         limpiar();
+        activar();
         jbt_guardar.setEnabled(true);
     }//GEN-LAST:event_bt_nuevoActionPerformed
 
@@ -402,17 +397,6 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
         guardar();
 
     }//GEN-LAST:event_jbt_guardarActionPerformed
-
-    private void txt_nfactura1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nfactura1ActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel datosSalida = CP.getDatosSalida();
-        System.out.println(datosSalida.toString());
-        String nFactura = datosSalida.getColumnName(1);
-
-        int num = Integer.parseInt(nFactura) + 1;
-        String numFac = Integer.toString(num);
-        txt_nfactura1.setText(numFac);
-    }//GEN-LAST:event_txt_nfactura1ActionPerformed
 
     private void txt_precioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precioKeyReleased
         // TODO add your handling code here:
@@ -428,12 +412,15 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
 
+        Cls_Empresa datosEmpresa = new Cls_Empresa();
+        Object[] datos = datosEmpresa.getEmpresa();
+
         JFileChooser seleccionar = new JFileChooser();
         int opcion = seleccionar.showSaveDialog(null);
         if (opcion == JFileChooser.APPROVE_OPTION) {
             String ruta = seleccionar.getSelectedFile().getAbsolutePath();
             String nombrereporte = ruta + ".xlsx";
-            String nombrehoja = "Inventario";
+            String nombrehoja = "Salida Productos";
             XSSFWorkbook libroinventario = new XSSFWorkbook();
             XSSFSheet hojainventario = libroinventario.createSheet(nombrehoja);
 
@@ -458,13 +445,55 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
             cscontenido.setBorderRight(BorderStyle.THIN);
             cscontenido.setBorderTop(BorderStyle.THIN);
 
-            XSSFRow titulo = hojainventario.createRow(0);
+            XSSFRow primeraFila = hojainventario.createRow(1);
+            XSSFRow segundaFila = hojainventario.createRow(2);
+            XSSFRow terceraFila = hojainventario.createRow(3);
+            XSSFRow cuartaFila = hojainventario.createRow(4);
+            XSSFRow quintaFila = hojainventario.createRow(5);
+
+            XSSFCell nombreEmpresa = primeraFila.createCell(0);
+            XSSFCell nit = segundaFila.createCell(0);
+            XSSFCell direccion = terceraFila.createCell(0);
+            XSSFCell email = cuartaFila.createCell(0);
+            XSSFCell telefono = quintaFila.createCell(0);
+
+            nombreEmpresa.setCellStyle(cscabecera);
+            nit.setCellStyle(cscabecera);
+            direccion.setCellStyle(cscabecera);
+            email.setCellStyle(cscabecera);
+            telefono.setCellStyle(cscabecera);
+
+            XSSFCell primeraCelda = primeraFila.createCell(1);
+            XSSFCell segundaCelda = segundaFila.createCell(1);
+            XSSFCell terceraCelda = terceraFila.createCell(1);
+            XSSFCell cuartaCelda = cuartaFila.createCell(1);
+            XSSFCell quintaCelda = quintaFila.createCell(1);
+
+            primeraCelda.setCellStyle(cscontenido);
+            segundaCelda.setCellStyle(cscontenido);
+            terceraCelda.setCellStyle(cscontenido);
+            cuartaCelda.setCellStyle(cscontenido);
+            quintaCelda.setCellStyle(cscontenido);
+
+            nombreEmpresa.setCellValue("Nombre Empresa: ");
+            nit.setCellValue("Nit Empresa: ");
+            direccion.setCellValue("Direccion Empresa: ");
+            email.setCellValue("Email Empresa: ");
+            telefono.setCellValue("Telefono Empresa: ");
+
+            primeraCelda.setCellValue(datos[4].toString());
+            segundaCelda.setCellValue(datos[0].toString());
+            terceraCelda.setCellValue(datos[3].toString());
+            cuartaCelda.setCellValue(datos[2].toString());
+            quintaCelda.setCellValue(datos[5].toString());
+
+            XSSFRow titulo = hojainventario.createRow(7);
             for (int i = 0; i < titulos.length; i++) {
                 XSSFCell celda = titulo.createCell(i);
                 celda.setCellValue(titulos[i]);
                 celda.setCellStyle(cscabecera);
             }
-            int filacontenido = 1;
+            int filacontenido = 8;
             for (int i = 0; i < jtb_salida.getRowCount(); i++) {
                 XSSFRow contenido = hojainventario.createRow(filacontenido);
                 filacontenido++;
@@ -514,7 +543,7 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txt_cantidad;
     public static javax.swing.JTextField txt_codigo;
     public static javax.swing.JTextField txt_descripcion;
-    private javax.swing.JTextField txt_nfactura1;
+    private javax.swing.JTextField txt_nsalida;
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
 }

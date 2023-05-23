@@ -1,5 +1,6 @@
 package Formularios;
 
+import Clases.Cls_Empresa;
 import Clases.Cls_Inventario;
 import javax.swing.table.TableColumnModel;
 import java.io.FileOutputStream;
@@ -136,6 +137,9 @@ public class Frm_Inventario extends javax.swing.JInternalFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
+        
+        Cls_Empresa datosEmpresa = new Cls_Empresa();
+        Object[] datos = datosEmpresa.getEmpresa();
 
          JFileChooser seleccionar = new JFileChooser();
         int opcion = seleccionar.showSaveDialog(null);
@@ -165,15 +169,58 @@ public class Frm_Inventario extends javax.swing.JInternalFrame {
             cscontenido.setBorderBottom(BorderStyle.THIN);
             cscontenido.setBorderLeft(BorderStyle.THIN);
             cscontenido.setBorderRight(BorderStyle.THIN);
-            cscontenido.setBorderTop(BorderStyle.THIN);            
+            cscontenido.setBorderTop(BorderStyle.THIN);   
+            
+            XSSFRow primeraFila = hojainventario.createRow(1);
+            XSSFRow segundaFila = hojainventario.createRow(2);
+            XSSFRow terceraFila = hojainventario.createRow(3);
+            XSSFRow cuartaFila = hojainventario.createRow(4);
+            XSSFRow quintaFila = hojainventario.createRow(5);
+            
+            
+            XSSFCell nombreEmpresa = primeraFila.createCell(0);
+            XSSFCell nit = segundaFila .createCell(0);
+            XSSFCell direccion = terceraFila.createCell(0);
+            XSSFCell email = cuartaFila.createCell(0);
+            XSSFCell telefono = quintaFila.createCell(0);
+            
+            nombreEmpresa.setCellStyle(cscabecera);
+            nit.setCellStyle(cscabecera);
+            direccion.setCellStyle(cscabecera);
+            email.setCellStyle(cscabecera);
+            telefono.setCellStyle(cscabecera);
+            
+            XSSFCell primeraCelda = primeraFila.createCell(1);
+            XSSFCell segundaCelda = segundaFila .createCell(1);
+            XSSFCell terceraCelda = terceraFila.createCell(1);
+            XSSFCell cuartaCelda = cuartaFila.createCell(1);
+            XSSFCell quintaCelda = quintaFila.createCell(1);
+            
+            primeraCelda.setCellStyle(cscontenido);
+            segundaCelda.setCellStyle(cscontenido);
+            terceraCelda.setCellStyle(cscontenido);
+            cuartaCelda.setCellStyle(cscontenido);
+            quintaCelda.setCellStyle(cscontenido);
+            
+            nombreEmpresa.setCellValue("Nombre Empresa: ");
+            nit.setCellValue("Nit Empresa: ");
+            direccion.setCellValue("Direccion Empresa: ");
+            email.setCellValue("Email Empresa: ");
+            telefono.setCellValue("Telefono Empresa: ");
+            
+            primeraCelda.setCellValue(datos[4].toString());
+            segundaCelda.setCellValue(datos[0].toString());
+            terceraCelda.setCellValue(datos[3].toString());
+            cuartaCelda.setCellValue(datos[2].toString());
+            quintaCelda.setCellValue(datos[5].toString());
              
-            XSSFRow titulo = hojainventario.createRow(0);
+            XSSFRow titulo = hojainventario.createRow(7);
             for(int i=0;i<titulos.length;i++){
                 XSSFCell celda = titulo.createCell(i);
                 celda.setCellValue(titulos[i]);
                 celda.setCellStyle(cscabecera);
             }
-            int filacontenido = 1;
+            int filacontenido = 8;
             for(int i = 0;i<jtb_inventario.getRowCount();i++){
                 XSSFRow contenido = hojainventario.createRow(filacontenido);
                 filacontenido++;

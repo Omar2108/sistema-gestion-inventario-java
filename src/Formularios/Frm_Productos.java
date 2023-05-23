@@ -1,5 +1,6 @@
 package Formularios;
 
+import Clases.Cls_Empresa;
 import Clases.Cls_Productos;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumnModel;
@@ -341,23 +342,28 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
+        
+        Cls_Empresa datosEmpresa = new Cls_Empresa();
+        Object[] datos = datosEmpresa.getEmpresa();
 
         JFileChooser seleccionar = new JFileChooser();
         int opcion = seleccionar.showSaveDialog(null);
         if (opcion == JFileChooser.APPROVE_OPTION) {
             String ruta = seleccionar.getSelectedFile().getAbsolutePath();
             String nombrereporte = ruta + ".xlsx";
-            String nombrehoja = "Inventario";
-            XSSFWorkbook libroinventario = new XSSFWorkbook();
-            XSSFSheet hojainventario = libroinventario.createSheet(nombrehoja);
+            String nombrehoja = "Productos";
+            
+            XSSFWorkbook libroProductos = new XSSFWorkbook();
+            XSSFSheet hojaProductos = libroProductos.createSheet(nombrehoja);
+           
 
             String[] titulos = new String[]{"CODIGO", "DESCRIPCION"};
 
-            Font fontcabecera = libroinventario.createFont();
+            Font fontcabecera = libroProductos.createFont();
             fontcabecera.setBold(true);
             fontcabecera.setColor(IndexedColors.WHITE.getIndex());
 
-            CellStyle cscabecera = libroinventario.createCellStyle();
+            CellStyle cscabecera = libroProductos.createCellStyle();
             cscabecera.setBorderBottom(BorderStyle.THIN);
             cscabecera.setBorderLeft(BorderStyle.THIN);
             cscabecera.setBorderRight(BorderStyle.THIN);
@@ -366,21 +372,69 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
             cscabecera.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             cscabecera.setFont(fontcabecera);
 
-            CellStyle cscontenido = libroinventario.createCellStyle();
+            CellStyle cscontenido = libroProductos.createCellStyle();
             cscontenido.setBorderBottom(BorderStyle.THIN);
             cscontenido.setBorderLeft(BorderStyle.THIN);
             cscontenido.setBorderRight(BorderStyle.THIN);
             cscontenido.setBorderTop(BorderStyle.THIN);
+            
+            CellStyle csEncabezado = libroProductos.createCellStyle();
+            csEncabezado.setFont(fontcabecera);
+            csEncabezado.setFillBackgroundColor(IndexedColors.BLUE.getIndex());
+            csEncabezado.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+            
+            XSSFRow primeraFila = hojaProductos.createRow(1);
+            XSSFRow segundaFila = hojaProductos.createRow(2);
+            XSSFRow terceraFila = hojaProductos.createRow(3);
+            XSSFRow cuartaFila = hojaProductos.createRow(4);
+            XSSFRow quintaFila = hojaProductos.createRow(5);
+            
+            
+            XSSFCell nombreEmpresa = primeraFila.createCell(0);
+            XSSFCell nit = segundaFila .createCell(0);
+            XSSFCell direccion = terceraFila.createCell(0);
+            XSSFCell email = cuartaFila.createCell(0);
+            XSSFCell telefono = quintaFila.createCell(0);
+            
+            nombreEmpresa.setCellStyle(cscabecera);
+            nit.setCellStyle(cscabecera);
+            direccion.setCellStyle(cscabecera);
+            email.setCellStyle(cscabecera);
+            telefono.setCellStyle(cscabecera);
+            
+            XSSFCell primeraCelda = primeraFila.createCell(1);
+            XSSFCell segundaCelda = segundaFila .createCell(1);
+            XSSFCell terceraCelda = terceraFila.createCell(1);
+            XSSFCell cuartaCelda = cuartaFila.createCell(1);
+            XSSFCell quintaCelda = quintaFila.createCell(1);
+            
+            primeraCelda.setCellStyle(cscontenido);
+            segundaCelda.setCellStyle(cscontenido);
+            terceraCelda.setCellStyle(cscontenido);
+            cuartaCelda.setCellStyle(cscontenido);
+            quintaCelda.setCellStyle(cscontenido);
+            
+            nombreEmpresa.setCellValue("Nombre Empresa: ");
+            nit.setCellValue("Nit Empresa: ");
+            direccion.setCellValue("Direccion Empresa: ");
+            email.setCellValue("Email Empresa: ");
+            telefono.setCellValue("Telefono Empresa: ");
+            
+            primeraCelda.setCellValue(datos[4].toString());
+            segundaCelda.setCellValue(datos[0].toString());
+            terceraCelda.setCellValue(datos[3].toString());
+            cuartaCelda.setCellValue(datos[2].toString());
+            quintaCelda.setCellValue(datos[5].toString());
 
-            XSSFRow titulo = hojainventario.createRow(0);
+            XSSFRow titulo = hojaProductos.createRow(7);
             for (int i = 0; i < titulos.length; i++) {
                 XSSFCell celda = titulo.createCell(i);
                 celda.setCellValue(titulos[i]);
                 celda.setCellStyle(cscabecera);
             }
-            int filacontenido = 1;
+            int filacontenido = 8;
             for (int i = 0; i < jtb_productos.getRowCount(); i++) {
-                XSSFRow contenido = hojainventario.createRow(filacontenido);
+                XSSFRow contenido = hojaProductos.createRow(filacontenido);
                 filacontenido++;
                 for (int j = 0; j < jtb_productos.getColumnCount(); j++) {
                     XSSFCell celda = contenido.createCell(j);
@@ -390,11 +444,11 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
 
             }
 
-            hojainventario.autoSizeColumn(0);
-            hojainventario.autoSizeColumn(1);
+            hojaProductos.autoSizeColumn(0);
+            hojaProductos.autoSizeColumn(1);
 
             try (OutputStream archivo = new FileOutputStream(nombrereporte)) {
-                libroinventario.write(archivo);
+                libroProductos.write(archivo);
                 JOptionPane.showMessageDialog(null, "¡Reporte generado, con exito!");
             } catch (IOException ex) {
                 ex.printStackTrace();
