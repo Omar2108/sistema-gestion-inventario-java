@@ -14,6 +14,7 @@ public final class Frm_Login extends javax.swing.JFrame {
     public Frm_Login() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("Sistema de Gestion de Inventario");
         setResizable(true);
         lo = new Cls_Login();
        getIconImage();

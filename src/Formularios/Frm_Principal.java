@@ -9,6 +9,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
     public Frm_Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("Sistema de Gestion de Inventario");
         setResizable(true);
         txt_menu.requestFocus();
         getIconImage();
@@ -58,10 +59,11 @@ public final class Frm_Principal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Sistema de Gestion de Inventario");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGO.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 120, 100));
+        jLabel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 220, 100));
 
         txt_menu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_menu.setForeground(new java.awt.Color(255, 255, 255));
@@ -140,6 +142,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/paquete.png"))); // NOI18N
         jButton2.setText("Productos");
+        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,7 +164,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
         jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 230, 40));
 
         btn_usuarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btn_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/paquete.png"))); // NOI18N
+        btn_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
         btn_usuarios.setText("Usuarios");
         btn_usuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_usuarios.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -202,21 +205,21 @@ public final class Frm_Principal extends javax.swing.JFrame {
 
         usuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usuario.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 40, 200, 20));
+        jPanel1.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 40, 200, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Usuario: ");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 40, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 40, -1, -1));
 
         label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         label.setForeground(new java.awt.Color(255, 255, 255));
         label.setText("Cargo: ");
-        jPanel1.add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 40, -1, -1));
+        jPanel1.add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 40, -1, -1));
 
         cargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cargo.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(cargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 40, 100, 20));
+        jPanel1.add(cargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, 40, 110, 20));
 
         jButton1.setBackground(new java.awt.Color(112, 145, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
@@ -225,7 +228,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 0, 40, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 0, 40, 30));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 

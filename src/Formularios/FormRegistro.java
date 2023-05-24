@@ -8,6 +8,7 @@ package Formularios;
 import Clases.Cls_Usuarios;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,16 +23,11 @@ public class FormRegistro extends javax.swing.JFrame {
     public FormRegistro() {
         initComponents();
         this.setLocationRelativeTo(this);
+        this.setIconImage(new ImageIcon(getClass().getResource("/Imagenes/cheque.png")).getImage());
+        this.setTitle("Sistema de Gestion de Inventario");
         setResizable(true);
     }
 
-    @Override
-    public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().
-                getImage(ClassLoader.getSystemResource("Imagenes/cheque.png"));
-
-        return retValue;
-    }
 
     private void limpiar() {
         txt_user.setText("");
