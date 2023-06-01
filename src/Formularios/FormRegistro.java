@@ -301,7 +301,7 @@ public class FormRegistro extends javax.swing.JFrame {
         
         try {
             result.next();
-            if (result.getRow() > 0) {
+            if (result.getInt(1) <= 0) {
 
                 int respuesta = con.registrarUsuario(user, clave, nombre, email, cargo);
 
