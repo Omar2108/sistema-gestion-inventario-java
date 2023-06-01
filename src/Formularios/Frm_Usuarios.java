@@ -1,6 +1,11 @@
 package Formularios;
 
 import Clases.Cls_Usuarios;
+import Clases.Util;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumnModel;
 
@@ -60,7 +65,7 @@ public class Frm_Usuarios extends javax.swing.JInternalFrame {
         jtb_usuario.clearSelection();
     }
 
-    private void guardar() {
+    private void guardar() throws SQLException {
 
         if (num == 0) {
             String user = txt_usuario.getText();
@@ -81,10 +86,10 @@ public class Frm_Usuarios extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Debe ingresar su correo electronico");
             } else {
 
-                int result = CP.getUsuario(user);
-
-                if (result > 0) {
-
+                ResultSet result = CP.getUsuario(user);
+                result.next();
+                if (result.getInt(1) <= 0) {
+                    
                     int respuesta = CP.registrarUsuario(user, clave, nombre, email, cargo);
                     if (respuesta > 0) {
 
@@ -335,10 +340,18 @@ public class Frm_Usuarios extends javax.swing.JInternalFrame {
     private void jtb_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtb_usuarioMouseClicked
         bt_actualizar.setEnabled(true);
         bt_eliminar.setEnabled(true);
-
         int row = jtb_usuario.getSelectedRow();
+        Util ut = new Util();
+        String pass = "";
+        try {
+            pass = ut.Desencriptar(jtb_usuario.getValueAt(row, 2).toString());
+
+        } catch (Exception ex) {
+            Logger.getLogger(Frm_Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         txt_usuario.setText(jtb_usuario.getValueAt(row, 1).toString());
-        txt_clave.setText(jtb_usuario.getValueAt(row, 2).toString());
+        txt_clave.setText(pass);
         txt_nombre.setText(jtb_usuario.getValueAt(row, 3).toString());
         txt_email.setText(jtb_usuario.getValueAt(row, 4).toString());
         txt_cargo.setText(jtb_usuario.getValueAt(row, 5).toString());
@@ -352,7 +365,11 @@ public class Frm_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_nuevoActionPerformed
 
     private void jbt_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbt_guardarActionPerformed
-        guardar();
+        try {
+            guardar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Frm_Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jbt_guardarActionPerformed
 

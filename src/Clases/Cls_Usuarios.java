@@ -74,13 +74,13 @@ public class Cls_Usuarios {
         return DT;
     }
     
-    public int getUsuario(String user){
+    public ResultSet getUsuario(String user){
         
-        int res = 0;
+        ResultSet res = null;
         try {
             CallableStatement cst = CN.getConnection().prepareCall("{Call sp_buscar_usuario(?)}");
             cst.setString(1, user);
-            res = cst.executeUpdate();
+            res = cst.executeQuery();
             
             return res;            
             
@@ -92,10 +92,11 @@ public class Cls_Usuarios {
 
     public int registrarUsuario(String user, String pass, String nombre, String email, String cargo) {
         int res = 0;
+        Util ut = new Util();
         try {
             PS = CN.getConnection().prepareStatement(SQL_INSERT_USUARIO);
             PS.setString(1, user);
-            PS.setString(2, pass);
+            PS.setString(2, ut.Encriptar(pass));
             PS.setString(3, nombre);
             PS.setString(4, email);
             PS.setString(5, cargo);
@@ -117,10 +118,11 @@ public class Cls_Usuarios {
     public int actualizarUsuario(String user,String pass, String email, String nombre, String cargo, int id) {
        // String SQL = "UPDATE usuarios SET email ='" + email + "', nombre_usuario = " + nombre + "', cargo = " + cargo + " ' WHERE user = '" + user + "'";
         int res = 0;
+        Util ut = new Util();
         try {
             CallableStatement cst = CN.getConnection().prepareCall("{Call sp_actualizar_usuario(?,?,?,?,?,?)}");
             cst.setString(1, user);
-            cst.setString(2, pass);
+            cst.setString(2, ut.Encriptar(pass));
             cst.setString(3, email);
             cst.setString(4, nombre);
             cst.setString(5, cargo);

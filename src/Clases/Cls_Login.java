@@ -6,6 +6,7 @@
 package Clases;
 
 import Conexion.Conectar;
+import Formularios.Frm_Login;
 import Formularios.Frm_Principal;
 import static Formularios.Frm_Principal.usuario;
 import static Formularios.Frm_Principal.cargo;
@@ -65,40 +66,53 @@ public class Cls_Login {
 
     }
 
-    public void consultarUsuario(String user, String pass) {
+    public void consultarUsuario(String user, String pass) throws Exception {
 
         // Se inicializa a null
         String usuarioCorrecto = null;
         String passCorrecto = null;
         try {
-            //String SQL = "SELECT user, pass,nombre_usuario, cargo FROM usuarios ";
-            CallableStatement cst = CN.getConnection().prepareCall("{Call sp_validar_usuario(?,?)}");
-            cst.setString(1, user);
-            cst.setString(2, pass);
-            RS = cst.executeQuery();
+            Util ut = new Util();
+            CallableStatement cst1 = CN.getConnection().prepareCall("{Call sp_buscar_usuario(?)}");
+            cst1.setString(1, user);
+            RS = cst1.executeQuery();
+            RS.next();
+            if (RS.getInt(1) > 0) {
 
-            if (RS.next()) {
-                usuarioCorrecto = RS.getString(1);
-                passCorrecto = RS.getString(2);
-                System.out.println(usuarioCorrecto + " " + passCorrecto);
-            }
+                CallableStatement cst = CN.getConnection().prepareCall("{Call sp_validar_usuario(?,?)}");
+                cst.setString(1, user);
+                cst.setString(2, RS.getString(3));
+                RS = cst.executeQuery();
 
-            if (user.equals(usuarioCorrecto) && pass.equals(passCorrecto)) {
-                JOptionPane.showMessageDialog(null, "Login correcto Bienvenido " + RS.getString(3));
-         
-                Frm_Principal ing = new Frm_Principal();
+                if (RS.next()) {
+
+                    usuarioCorrecto = RS.getString(1);
+                    passCorrecto = ut.Desencriptar(RS.getString(2));
+                }
+
+                if (user.equals(usuarioCorrecto) && pass.equals(passCorrecto)) {
+                    JOptionPane.showMessageDialog(null, "Login correcto Bienvenido " + RS.getString(3));
+
+                    Frm_Principal ing = new Frm_Principal();
+                    ing.setVisible(true);
+                    ing.show();
+                    if (!usuarioCorrecto.equals("admin")) {
+                        btn_empresa.setEnabled(false);
+                        btn_usuarios.setEnabled(false);
+
+                    }
+                    usuario.setText((String) RS.getString(3));
+                    cargo.setText((String) RS.getString(4));
+                } else if (!user.equals(usuarioCorrecto) || pass.equals(passCorrecto)) {
+
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "¡El usuario no existe!");
+                Frm_Login ing = new Frm_Login();
                 ing.setVisible(true);
                 ing.show();
-                 if (!usuarioCorrecto.equals("admin")) {
-                    btn_empresa.setEnabled(false);
-                    btn_usuarios.setEnabled(false);
-                    
-                }
-                usuario.setText((String) RS.getString(3));
-                cargo.setText((String) RS.getString(4));
-            } else if (!user.equals(usuarioCorrecto) || pass.equals(passCorrecto)) {
-
-                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
             }
 
         } catch (HeadlessException | SQLException e) {

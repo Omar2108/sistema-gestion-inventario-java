@@ -8,6 +8,10 @@ package Formularios;
 import Clases.Cls_Usuarios;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -27,7 +31,6 @@ public class FormRegistro extends javax.swing.JFrame {
         this.setTitle("Sistema de Gestion de Inventario");
         setResizable(true);
     }
-
 
     private void limpiar() {
         txt_user.setText("");
@@ -294,19 +297,24 @@ public class FormRegistro extends javax.swing.JFrame {
         String nombre = txt_nombre.getText();
         String email = txt_email.getText();
 
-        int result = con.getUsuario(user);
+        ResultSet result = con.getUsuario(user);
+        
+        try {
+            result.next();
+            if (result.getRow() > 0) {
 
-        if (result > 0) {
-            
-            int respuesta = con.registrarUsuario(user, clave, nombre, email, cargo);
+                int respuesta = con.registrarUsuario(user, clave, nombre, email, cargo);
 
-            if (respuesta > 0) {
-                limpiar();
+                if (respuesta > 0) {
+                    limpiar();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "¡El usuario ya se encuentra registrado, intentelo de nuevo!");
+
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "¡El usuario ya se encuentra registrado, intentelo de nuevo!");
-            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

@@ -3,41 +3,41 @@ package Formularios;
 import Clases.Cls_Login;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 
-
 public final class Frm_Login extends javax.swing.JFrame {
-    
+
     private Cls_Login lo;
-    
-    
+
     public Frm_Login() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema de Gestion de Inventario");
         setResizable(true);
         lo = new Cls_Login();
-       getIconImage();
+        getIconImage();
     }
 
     @Override
     public Image getIconImage() {
-       Image retValue = Toolkit.getDefaultToolkit().
-             getImage(ClassLoader.getSystemResource("Imagenes/cheque.png"));
-       
-       return retValue;
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("Imagenes/cheque.png"));
+
+        return retValue;
     }
-    
-    private void login(){
-        
+
+    private void login() throws Exception {
+
         String user = txt_usuario.getText();
         String pass = String.valueOf(txt_clave.getPassword());
-        
+
         lo.consultarUsuario(user, pass);
         this.dispose();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -152,9 +152,13 @@ public final class Frm_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        login();
-        
+
+        try {
+            login();
+        } catch (Exception ex) {
+            Logger.getLogger(Frm_Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
