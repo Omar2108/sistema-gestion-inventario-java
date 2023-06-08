@@ -8,7 +8,7 @@ Este proyecto esta desarrollado en Java, utilizando el JDK 17, JFrame de java, c
 
 ### Forma 1:
 -Dar clic en code y luego en donwload zip, para descargarlo desde el repositorio.
--Luego lo puede abrir en el ide que este utilizando, importando el proyecto o desde un editor de codigo de su preferencia.
+-Luego lo puede abrir en el IDE que este utilizando, importando el proyecto o desde un editor de codigo de su preferencia.
 
  ### Forma 2:
  -Crear una carpeta, ingresar a git bash y ejecutar la siguiente linea de comando:
@@ -22,8 +22,8 @@ Este proyecto esta desarrollado en Java, utilizando el JDK 17, JFrame de java, c
 #### En Desarrollo
      En su IDE dar click en run para comenzar a correr el programa
 #### En Produccion 
-    - A traves de linea de comando, utilice el siguiente java -jar "InventarioFree"
-    - Dando click en el archivo .jar
+    - A traves de linea de comando, utilice el siguiente: java -jar "InventarioFree.jar"
+    - Dando doble click en el archivo .jar
 
 ## Descarga y registro de cambios:
 Siempre se recomienda descargar desde GitHub la última versión.
