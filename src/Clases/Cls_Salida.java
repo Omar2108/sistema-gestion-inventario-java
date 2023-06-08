@@ -36,7 +36,8 @@ public class Cls_Salida {
         DT.addColumn("Descripción");
         DT.addColumn("Cantidad");
         DT.addColumn("Precio Unitario");
-        DT.addColumn("Total");
+        DT.addColumn("Total Salida");
+        DT.addColumn("% Ganancia Estimada");
         DT.addColumn("Ganancia Estimada");
         return DT;
     }
@@ -66,10 +67,11 @@ public class Cls_Salida {
             setTitulosSalida();
             PS = CN.getConnection().prepareStatement(SQL_SELECT_SALIDA);
             RS = PS.executeQuery();
-            Object[] fila = new Object[8];
+            Object[] fila = new Object[9];
             while(RS.next()){
                 
                 int ganancia = RS.getInt(7) - RS.getInt(8);
+                int porcentaje = (ganancia * 100) / RS.getInt(7);
                 fila[0] = RS.getString(1);
                 fila[1] = RS.getDate(2);
                 fila[2] = RS.getString(3);
@@ -77,7 +79,8 @@ public class Cls_Salida {
                 fila[4] = RS.getInt(5);
                 fila[5] = RS.getInt(6);
                 fila[6] = RS.getInt(7);
-                fila[7] = ganancia;
+                fila[7] = porcentaje;
+                fila[8] = ganancia;
                 DT.addRow(fila);
             }
         } catch (SQLException e) {

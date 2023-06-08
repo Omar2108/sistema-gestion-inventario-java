@@ -1,11 +1,20 @@
 package Formularios;
 
+import Clases.ImportarExportarDB;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.UIManager;
 
 public final class Frm_Principal extends javax.swing.JFrame {
 
+    String hora = "";
+    
     public Frm_Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -13,6 +22,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
         setResizable(true);
         txt_menu.requestFocus();
         getIconImage();
+        
     }
 
     @Override
@@ -292,9 +302,11 @@ public final class Frm_Principal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ImportarExportarDB db = new ImportarExportarDB();
+        db.exportarDB();
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+ 
     /**
      * @param args the command line arguments
      */

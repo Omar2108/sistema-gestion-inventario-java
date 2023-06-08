@@ -39,10 +39,11 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
 
     private void listar() {
         jtb_salida.setModel(CP.getDatosSalida());
-        columnModel.getColumn(3).setPreferredWidth(250);
+        columnModel.getColumn(3).setPreferredWidth(200);
         jtb_salida.getColumnModel().getColumn(5).setCellRenderer(new CurrencyCellRenderer());
         jtb_salida.getColumnModel().getColumn(6).setCellRenderer(new CurrencyCellRenderer());
-        jtb_salida.getColumnModel().getColumn(7).setCellRenderer(new CurrencyCellRenderer());
+        jtb_salida.getColumnModel().getColumn(8).setCellRenderer(new CurrencyCellRenderer());
+      
     }
 
     private void iniciar() {
@@ -424,7 +425,7 @@ public class Frm_Salida extends javax.swing.JInternalFrame {
             XSSFWorkbook libroinventario = new XSSFWorkbook();
             XSSFSheet hojainventario = libroinventario.createSheet(nombrehoja);
 
-            String[] titulos = new String[]{"# FACTURA", "FECHA SALIDA", "CODIGO PRODUCTO", "DESCRIPCION", "CANTIDAD SALIDA", "PRECIO UNITARIO", "TOTAL", "GANANCIA ESTIMADA"};
+            String[] titulos = new String[]{"# FACTURA", "FECHA SALIDA", "CODIGO PRODUCTO", "DESCRIPCION", "CANTIDAD SALIDA", "PRECIO UNITARIO", "TOTAL","% PORCENTAJE GANANCIA ESTIMADA", "GANANCIA ESTIMADA"};
 
             Font fontcabecera = libroinventario.createFont();
             fontcabecera.setBold(true);
