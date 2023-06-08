@@ -22,7 +22,7 @@ Este proyecto esta desarrollado en Java, utilizando el JDK 17, JFrame de java, c
 #### En Desarrollo
      En su IDE dar click en run para comenzar a correr el programa
 #### En Produccion 
-    - A traves de linea de comando, utilice el siguiente: java -jar "InventarioFree.jar"
+    - A traves de linea de comando, utilice el siguiente: java -jar "Inventario.jar"
     - Dando doble click en el archivo .jar
 
 ## Descarga y registro de cambios:
