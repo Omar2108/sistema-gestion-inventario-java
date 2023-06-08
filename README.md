@@ -2,7 +2,7 @@
  Sistema para gestionar el inventario de un negocio, de escritorio.
  
  ## Introduccion
-Este proyecto esta desarrollado en Java, utilizando el JDK 11, JFrame de java, como dependencia o librerias utulizadas el conector para MySQL, librerias para generar reportes en formato excel o cualquier otro formato.
+Este proyecto esta desarrollado en Java, utilizando el JDK 17, JFrame de java, como dependencia o librerias utulizadas el conector para MySQL, librerias para generar reportes en formato excel o cualquier otro formato.
 
 ## Instalacion
 
