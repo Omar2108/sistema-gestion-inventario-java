@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
 public final class Frm_Principal extends javax.swing.JFrame {
@@ -45,9 +46,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         btn_usuarios = new javax.swing.JButton();
         contenedor = new javax.swing.JPanel();
         escritorio = new javax.swing.JDesktopPane();
@@ -56,6 +55,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
         label = new javax.swing.JLabel();
         cargo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        btn_restaurar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Inventario");
@@ -91,7 +91,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 btn_empresaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 230, 40));
+        jPanel1.add(btn_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 230, 40));
         btn_empresa.getAccessibleContext().setAccessibleDescription("");
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -103,7 +103,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, 40));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 40));
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/venta.png"))); // NOI18N
@@ -114,7 +114,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 230, 40));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 40));
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inventario.png"))); // NOI18N
@@ -131,23 +131,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton5PropertyChange(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 230, 40));
-
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inventario.png"))); // NOI18N
-        jButton6.setText("Inventario");
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jButton6.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jButton6PropertyChange(evt);
-            }
-        });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 230, 40));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 230, 40));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/paquete.png"))); // NOI18N
@@ -159,19 +143,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 230, 40));
-
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/paquete.png"))); // NOI18N
-        jButton7.setText("Productos");
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton7.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 230, 40));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 40));
 
         btn_usuarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btn_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
@@ -183,7 +155,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 btn_usuariosActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 230, 40));
+        jPanel1.add(btn_usuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 230, 40));
 
         contenedor.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -240,6 +212,18 @@ public final class Frm_Principal extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 0, 40, 30));
 
+        btn_restaurar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btn_restaurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/restaurardb.png"))); // NOI18N
+        btn_restaurar.setText("Restaurar DB");
+        btn_restaurar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_restaurar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        btn_restaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_restaurarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_restaurar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 230, 40));
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -273,25 +257,12 @@ public final class Frm_Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5PropertyChange
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton6PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jButton6PropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6PropertyChange
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         Frm_Productos f = new Frm_Productos();
         escritorio.add(f);
         f.show();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btn_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_usuariosActionPerformed
         // TODO add your handling code here:
@@ -306,6 +277,16 @@ public final class Frm_Principal extends javax.swing.JFrame {
         db.exportarDB();
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_restaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_restaurarActionPerformed
+        // TODO add your handling code here:
+        ImportarExportarDB db = new ImportarExportarDB();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(fileChooser);
+        String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+        db.importarDB(ruta);
+        
+    }//GEN-LAST:event_btn_restaurarActionPerformed
  
     /**
      * @param args the command line arguments
@@ -339,6 +320,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_empresa;
+    public static javax.swing.JButton btn_restaurar;
     public static javax.swing.JButton btn_usuarios;
     public static javax.swing.JLabel cargo;
     public static javax.swing.JPanel contenedor;
@@ -348,8 +330,6 @@ public final class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    public javax.swing.JButton jButton6;
-    public javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
