@@ -2,11 +2,14 @@ package Formularios;
 
 import Clases.Cls_Empresa;
 import Clases.Cls_Productos;
+import Clases.ImportarExcel;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumnModel;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -74,6 +77,9 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
                     if (CP.verificarCodigoInventario(codigo) == 0) {
                         CP.insertarProductoInventario(codigo);
                     }
+
+                    JOptionPane.showMessageDialog(null, "Producto registrado con éxito.");
+
                     listar();
                     limpiar();
                     iniciar();
@@ -81,7 +87,7 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
                 }
 
             }
-            
+
         } else {
             int row = jtb_productos.getSelectedRow();
             String codigo_old = jtb_productos.getValueAt(row, 0).toString();
@@ -115,6 +121,7 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnReporte = new javax.swing.JButton();
+        btnImportar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Productos");
@@ -210,6 +217,14 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnImportar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnImportar.setText("Importar Excel");
+        btnImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -217,7 +232,25 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addComponent(btnReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(50, 50, 50)
@@ -228,34 +261,19 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
                         .addComponent(bt_actualizar)
                         .addGap(50, 50, 50)
                         .addComponent(bt_eliminar)
-                        .addGap(135, 135, 135))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(77, 77, 77))))
+                        .addGap(135, 135, 135))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
+                    .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel1))
@@ -272,7 +290,7 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
                     .addComponent(bt_eliminar)
                     .addComponent(bt_nuevo)
                     .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24))
+                .addGap(104, 104, 104))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -342,7 +360,7 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
 
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
-        
+
         Cls_Empresa datosEmpresa = new Cls_Empresa();
         Object[] datos = datosEmpresa.getEmpresa();
 
@@ -352,10 +370,9 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
             String ruta = seleccionar.getSelectedFile().getAbsolutePath();
             String nombrereporte = ruta + ".xlsx";
             String nombrehoja = "Productos";
-            
+
             XSSFWorkbook libroProductos = new XSSFWorkbook();
             XSSFSheet hojaProductos = libroProductos.createSheet(nombrehoja);
-           
 
             String[] titulos = new String[]{"CODIGO", "DESCRIPCION"};
 
@@ -377,49 +394,48 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
             cscontenido.setBorderLeft(BorderStyle.THIN);
             cscontenido.setBorderRight(BorderStyle.THIN);
             cscontenido.setBorderTop(BorderStyle.THIN);
-            
+
             CellStyle csEncabezado = libroProductos.createCellStyle();
             csEncabezado.setFont(fontcabecera);
             csEncabezado.setFillBackgroundColor(IndexedColors.BLUE.getIndex());
             csEncabezado.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-            
+
             XSSFRow primeraFila = hojaProductos.createRow(1);
             XSSFRow segundaFila = hojaProductos.createRow(2);
             XSSFRow terceraFila = hojaProductos.createRow(3);
             XSSFRow cuartaFila = hojaProductos.createRow(4);
             XSSFRow quintaFila = hojaProductos.createRow(5);
-            
-            
+
             XSSFCell nombreEmpresa = primeraFila.createCell(0);
-            XSSFCell nit = segundaFila .createCell(0);
+            XSSFCell nit = segundaFila.createCell(0);
             XSSFCell direccion = terceraFila.createCell(0);
             XSSFCell email = cuartaFila.createCell(0);
             XSSFCell telefono = quintaFila.createCell(0);
-            
+
             nombreEmpresa.setCellStyle(cscabecera);
             nit.setCellStyle(cscabecera);
             direccion.setCellStyle(cscabecera);
             email.setCellStyle(cscabecera);
             telefono.setCellStyle(cscabecera);
-            
+
             XSSFCell primeraCelda = primeraFila.createCell(1);
-            XSSFCell segundaCelda = segundaFila .createCell(1);
+            XSSFCell segundaCelda = segundaFila.createCell(1);
             XSSFCell terceraCelda = terceraFila.createCell(1);
             XSSFCell cuartaCelda = cuartaFila.createCell(1);
             XSSFCell quintaCelda = quintaFila.createCell(1);
-            
+
             primeraCelda.setCellStyle(cscontenido);
             segundaCelda.setCellStyle(cscontenido);
             terceraCelda.setCellStyle(cscontenido);
             cuartaCelda.setCellStyle(cscontenido);
             quintaCelda.setCellStyle(cscontenido);
-            
+
             nombreEmpresa.setCellValue("Nombre Empresa: ");
             nit.setCellValue("Nit Empresa: ");
             direccion.setCellValue("Direccion Empresa: ");
             email.setCellValue("Email Empresa: ");
             telefono.setCellValue("Telefono Empresa: ");
-            
+
             primeraCelda.setCellValue(datos[4].toString());
             segundaCelda.setCellValue(datos[0].toString());
             terceraCelda.setCellValue(datos[3].toString());
@@ -457,12 +473,27 @@ public class Frm_Productos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnReporteActionPerformed
 
+    private void btnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarActionPerformed
+        // TODO add your handling code here:
+        
+        ImportarExcel importar = new ImportarExcel();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(fileChooser);
+        String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+        try {
+            importar.importarExcel(ruta);
+        } catch (IOException ex) {
+            Logger.getLogger(Frm_Productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImportarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_actualizar;
     private javax.swing.JButton bt_eliminar;
     private javax.swing.JButton bt_guardar;
     private javax.swing.JButton bt_nuevo;
+    private javax.swing.JButton btnImportar;
     private javax.swing.JButton btnReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

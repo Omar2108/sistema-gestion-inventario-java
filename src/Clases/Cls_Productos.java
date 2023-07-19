@@ -1,6 +1,7 @@
 package Clases;
 
 import Conexion.Conectar;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ public class Cls_Productos {
     private final Conectar CN;
     private DefaultTableModel DT;
     private final String SQL_INSERT_PRODUCTOS = "INSERT INTO producto (pro_codigo,pro_descripcion) values (?,?)";
-    private final String SQL_SELECT_PRODUCTOS = "SELECT *FROM producto";
+    private final String SQL_SELECT_PRODUCTOS = "SELECT * FROM producto";
     
     public Cls_Productos(){
         PS = null;
@@ -31,6 +32,22 @@ public class Cls_Productos {
         DT.addColumn("Código");
         DT.addColumn("Descripción");
         return DT;
+    }
+    
+    public ResultSet getProducto(String input){
+        
+        ResultSet res = null;
+        try {
+            CallableStatement cst = CN.getConnection().prepareCall("{Call sp_buscar_producto(?)}");
+            cst.setString(1, input);
+            res = cst.executeQuery();
+            
+            return res;            
+            
+        } catch (Exception e) {
+            System.out.println("Error al consultar el producto: " + e.getMessage());
+        }
+        return res;
     }
     
     public DefaultTableModel getDatosProductos(){
@@ -61,9 +78,7 @@ public class Cls_Productos {
             PS.setString(1, codigo);
             PS.setString(2, descripcion);
             res = PS.executeUpdate();
-            if(res > 0){
-                JOptionPane.showMessageDialog(null, "Producto registrado con éxito.");
-            }
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se pudo registrar el producto.");
             System.err.println("Error al registrar el producto." +e.getMessage());
