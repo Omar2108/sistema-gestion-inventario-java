@@ -3,12 +3,6 @@ package Formularios;
 import Clases.ImportarExportarDB;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
@@ -56,6 +50,8 @@ public final class Frm_Principal extends javax.swing.JFrame {
         cargo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btn_restaurar = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Inventario");
@@ -79,7 +75,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
         txt_menu.setForeground(new java.awt.Color(255, 255, 255));
         txt_menu.setText("MENU PRINCIPAL");
         txt_menu.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jPanel1.add(txt_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, -1, -1));
+        jPanel1.add(txt_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         btn_empresa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btn_empresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/empresa.jpg"))); // NOI18N
@@ -91,7 +87,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 btn_empresaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 230, 40));
+        jPanel1.add(btn_empresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 230, 40));
         btn_empresa.getAccessibleContext().setAccessibleDescription("");
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -103,7 +99,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 40));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 230, 40));
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/venta.png"))); // NOI18N
@@ -114,7 +110,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, 40));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, 40));
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inventario.png"))); // NOI18N
@@ -131,11 +127,11 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton5PropertyChange(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 230, 40));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 230, 40));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/paquete.png"))); // NOI18N
-        jButton2.setText("Productos");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/proveedor.png"))); // NOI18N
+        jButton2.setText("Proveedores");
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -143,7 +139,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 230, 40));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 230, 40));
 
         btn_usuarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btn_usuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
@@ -222,7 +218,31 @@ public final class Frm_Principal extends javax.swing.JFrame {
                 btn_restaurarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_restaurar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 230, 40));
+        jPanel1.add(btn_restaurar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 230, 40));
+
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/paquete.png"))); // NOI18N
+        jButton6.setText("Productos");
+        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 230, 40));
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cliente.png"))); // NOI18N
+        jButton7.setText("Clientes");
+        jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 230, 40));
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -259,7 +279,7 @@ public final class Frm_Principal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Frm_Productos f = new Frm_Productos();
+        Frm_Proveedores f = new Frm_Proveedores();
         escritorio.add(f);
         f.show();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -287,6 +307,20 @@ public final class Frm_Principal extends javax.swing.JFrame {
         db.importarDB(ruta);
         
     }//GEN-LAST:event_btn_restaurarActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        Frm_Productos f = new Frm_Productos();
+        escritorio.add(f);
+        f.show();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        Frm_Clientes f = new Frm_Clientes();
+        escritorio.add(f);
+        f.show();
+    }//GEN-LAST:event_jButton7ActionPerformed
  
     /**
      * @param args the command line arguments
@@ -330,6 +364,8 @@ public final class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
