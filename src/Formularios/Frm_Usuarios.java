@@ -348,6 +348,7 @@ public class Frm_Usuarios extends javax.swing.JInternalFrame {
 
         } catch (Exception ex) {
             Logger.getLogger(Frm_Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
         txt_usuario.setText(jtb_usuario.getValueAt(row, 1).toString());
@@ -369,6 +370,7 @@ public class Frm_Usuarios extends javax.swing.JInternalFrame {
             guardar();
         } catch (SQLException ex) {
             Logger.getLogger(Frm_Usuarios.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
     }//GEN-LAST:event_jbt_guardarActionPerformed

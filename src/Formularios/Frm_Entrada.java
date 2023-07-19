@@ -3,6 +3,7 @@ package Formularios;
 import Clases.Cls_Empresa;
 import Clases.Cls_Entrada;
 import Clases.CurrencyCellRenderer;
+import Clases.GenerarPDFEntrada;
 import java.awt.Dimension;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -26,6 +27,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 public class Frm_Entrada extends javax.swing.JInternalFrame {
 
     private final Cls_Entrada CP;
+    private final GenerarPDFEntrada PDF;
     public static int enviar = 0;
     TableColumnModel columnModel;
     int num = 0;
@@ -33,6 +35,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
     public Frm_Entrada() {
         initComponents();
         CP = new Cls_Entrada();
+        PDF = new GenerarPDFEntrada();
         columnModel = jtb_entrada.getColumnModel();
         listar();
         iniciar();
@@ -40,9 +43,10 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
 
     private void listar() {
         jtb_entrada.setModel(CP.getDatosEntradas());
-        columnModel.getColumn(3).setPreferredWidth(350);
+        columnModel.getColumn(3).setPreferredWidth(220);
+        columnModel.getColumn(6).setPreferredWidth(170);
         jtb_entrada.getColumnModel().getColumn(5).setCellRenderer(new CurrencyCellRenderer());
-        jtb_entrada.getColumnModel().getColumn(6).setCellRenderer(new CurrencyCellRenderer());
+        jtb_entrada.getColumnModel().getColumn(7).setCellRenderer(new CurrencyCellRenderer());
     }
 
     private void iniciar() {
@@ -52,6 +56,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
         jdc_fecha.setEnabled(false);
         jbt_buscar.setEnabled(false);
         jbt_guardar.setEnabled(false);
+        text_identify.setEnabled(false);
 
     }
 
@@ -70,6 +75,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
         txt_precio.setEnabled(true);
         jdc_fecha.requestFocus();
         jbt_guardar.setEnabled(true);
+        text_identify.setEnabled(true);
     }
 
     private void limpiar() {
@@ -79,6 +85,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
         txt_precio.setText("");
         txt_nfactura.requestFocus();
         jtb_entrada.clearSelection();
+        text_identify.setText("");
     }
 
     private void guardar() {
@@ -89,23 +96,28 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar la cantidad que entra del producto");
         } else if (txt_codigo.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe ingresar el codigo del producto");
+        } else if (text_identify.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar el numero de identificacion del proveedor");
         } else {
             
             String nfac = txt_nfactura.getText();
             String codigo = txt_codigo.getText();
+            String descripcion = txt_descripcion.getText();
+            int identify = Integer.parseInt(text_identify.getText());
             int cantidad = Integer.parseInt(txt_cantidad.getText());
             Date fechaa = jdc_fecha.getDate();
-            int precio = Integer.parseInt(txt_precio.getText());
-            int total = Integer.parseInt(txt_precio.getText()) * Integer.parseInt(txt_cantidad.getText());
+            int precio = Integer.parseInt(txt_precio.getText().replace(".", ""));
+            int total = Integer.parseInt(txt_precio.getText().replace(".", "")) * Integer.parseInt(txt_cantidad.getText());
             long d = fechaa.getTime();
             java.sql.Date fecha_sql = new java.sql.Date(d);
 
             if (num == 0) {
-                int respuesta = CP.registrarEntrada(nfac, codigo, fecha_sql, cantidad, precio, total);
+                int respuesta = CP.registrarEntrada(nfac, codigo, fecha_sql, cantidad, precio, total,identify );
                 if (respuesta > 0) {
                     listar();
                     limpiar();
                     iniciar();
+                    PDF.crearPdf(nfac, codigo,descripcion, cantidad, precio,identify);
                 }
             }
 
@@ -138,6 +150,8 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
         txt_nfactura = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         btnReporte = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        text_identify = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Entrada");
@@ -168,6 +182,12 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Descripción del Producto *");
+
+        txt_cantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_cantidadActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Cantidad *");
@@ -241,13 +261,22 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
         });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Precio Unitario Producto *");
+        jLabel8.setText("Cedula/NIT Proveedor*");
 
         btnReporte.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnReporte.setText("Generar reporte");
         btnReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReporteActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("Precio Unitario Producto *");
+
+        text_identify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_identifyActionPerformed(evt);
             }
         });
 
@@ -282,15 +311,19 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jLabel4)
                                                 .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jdc_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel5))
                                             .addGap(73, 73, 73)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel8)
-                                                .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(0, 0, Short.MAX_VALUE))))
+                                                .addComponent(jLabel9)
+                                                .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(text_identify, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGap(41, 41, 41))))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(77, 77, 77))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -308,7 +341,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addGap(40, 40, 40)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -319,9 +352,13 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jdc_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_precio, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            .addComponent(text_identify))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -332,7 +369,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_descripcion, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txt_codigo, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jbt_buscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)))
+                            .addComponent(jbt_buscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -428,7 +465,7 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
             XSSFWorkbook libroinventario = new XSSFWorkbook();
             XSSFSheet hojainventario = libroinventario.createSheet(nombrehoja);
 
-            String[] titulos = new String[]{"# FACTURA", "FECHA ENTRADA", "CODIGO PRODUCTO", "DESCRIPCION", "CANTIDAD ENTRADA", "PRECIO UNITARIO", "TOTAL"};
+            String[] titulos = new String[]{"# FACTURA", "FECHA ENTRADA", "CODIGO PRODUCTO", "DESCRIPCION", "CANTIDAD ENTRADA", "PRECIO UNITARIO","IDENTIFICACION PROVEEDOR", "TOTAL"};
 
             Font fontcabecera = libroinventario.createFont();
             fontcabecera.setBold(true);
@@ -517,15 +554,25 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
             hojainventario.autoSizeColumn(4);
             hojainventario.autoSizeColumn(5);
             hojainventario.autoSizeColumn(6);
+            hojainventario.autoSizeColumn(7);
             try (OutputStream archivo = new FileOutputStream(nombrereporte)) {
                 libroinventario.write(archivo);
                 JOptionPane.showMessageDialog(null, "¡Reporte generado, con exito!");
             } catch (IOException ex) {
                 ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
 
         }
     }//GEN-LAST:event_btnReporteActionPerformed
+
+    private void txt_cantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_cantidadActionPerformed
+
+    private void text_identifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_identifyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_identifyActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -539,17 +586,19 @@ public class Frm_Entrada extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbt_buscar;
     private javax.swing.JButton jbt_guardar;
     private com.toedter.calendar.JDateChooser jdc_fecha;
     private javax.swing.JTable jtb_entrada;
+    public static javax.swing.JTextField text_identify;
     public static javax.swing.JTextField txt_cantidad;
     public static javax.swing.JTextField txt_codigo;
     public static javax.swing.JTextField txt_descripcion;
-    private javax.swing.JTextField txt_nfactura;
-    private javax.swing.JTextField txt_precio;
+    public static javax.swing.JTextField txt_nfactura;
+    public static javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
 
 }

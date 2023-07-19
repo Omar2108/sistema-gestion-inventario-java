@@ -13,9 +13,9 @@ public class Cls_Salida {
     private ResultSet RS;
     private final Conectar CN;
     private DefaultTableModel DT;
-    private final String SQL_INSERT_SALIDA = "INSERT INTO salida (sal_factura, sal_pro_codigo, sal_fecha, sal_cantidad, sal_precio, sal_total) values (?,?,?,?,?,?)";
-    private final String SQL_SELECT_SALIDA = "SELECT sal_factura, sal_fecha, sal_pro_codigo, pro_descripcion, sal_cantidad, sal_precio, sal_total, entrada.ent_total FROM salida INNER JOIN producto ON sal_pro_codigo = pro_codigo INNER JOIN entrada ON sal_pro_codigo = ent_pro_codigo";
-    private final String SQL_SELECT_FACTURA_SALIDA = "SELECT MAX(sal.sal_id),sal.sal_factura FROM salida sal";
+    private final String SQL_INSERT_SALIDA = "INSERT INTO salida (sal_factura, sal_pro_codigo, sal_fecha, sal_cantidad, sal_precio, sal_total, sal_cli_cedula_nit) values (?,?,?,?,?,?,?)";
+    private final String SQL_SELECT_SALIDA = "SELECT sal_factura, sal_fecha, sal_pro_codigo, pro_descripcion, sal_cantidad, sal_precio, sal_total, sal_cli_cedula_nit FROM salida INNER JOIN producto ON sal_pro_codigo = pro_codigo";
+    private final String SQL_SELECT_FACTURA_SALIDA = "SELECT MAX(sal.sal_id) as consec FROM salida sal";
     
     public Cls_Salida(){
         PS = null;
@@ -37,8 +37,6 @@ public class Cls_Salida {
         DT.addColumn("Cantidad");
         DT.addColumn("Precio Unitario");
         DT.addColumn("Total Salida");
-        DT.addColumn("% Ganancia Estimada");
-        DT.addColumn("Ganancia Estimada");
         return DT;
     }
     
@@ -49,7 +47,7 @@ public class Cls_Salida {
             RS = PS.executeQuery();
             boolean next = RS.next();
             if (next) {
-                String result = RS.getString(2);
+                String result = RS.getString(1);
 
                 return result;
 
@@ -67,11 +65,10 @@ public class Cls_Salida {
             setTitulosSalida();
             PS = CN.getConnection().prepareStatement(SQL_SELECT_SALIDA);
             RS = PS.executeQuery();
-            Object[] fila = new Object[9];
+            Object[] fila = new Object[7];
             while(RS.next()){
                 
-                int ganancia = RS.getInt(7) - RS.getInt(8);
-                int porcentaje = (ganancia * 100) / RS.getInt(7);
+                
                 fila[0] = RS.getString(1);
                 fila[1] = RS.getDate(2);
                 fila[2] = RS.getString(3);
@@ -79,8 +76,6 @@ public class Cls_Salida {
                 fila[4] = RS.getInt(5);
                 fila[5] = RS.getInt(6);
                 fila[6] = RS.getInt(7);
-                fila[7] = porcentaje;
-                fila[8] = ganancia;
                 DT.addRow(fila);
             }
         } catch (SQLException e) {
@@ -93,7 +88,33 @@ public class Cls_Salida {
         return DT;
     }
     
-    public int registrarSalida(String nfactura, String codigo, Date fecha, int cantidad, int precio, int total){
+    public Object[] getCliente(int identify){
+         Object[] fila = new Object[5];
+        try {
+            setTitulosSalida();
+            PS = CN.getConnection().prepareStatement("SELECT cli_cedula_nit, cli_nombre,cli_direccion,cli_telefono,cli_email from clientes WHERE cli_cedula_nit = '" + identify + "'");
+            RS = PS.executeQuery();
+            
+            while (RS.next()) {
+                fila[0] = RS.getInt(1);
+                fila[1] = RS.getString(2);
+                fila[2] = RS.getString(3);
+                fila[3] = RS.getString(4);
+                fila[4] = RS.getString(5);
+               
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al consultar los datos." + e.getMessage());
+        } finally {
+            PS = null;
+            RS = null;
+            CN.desconectar();
+        }
+        return fila;
+        
+    }
+    
+    public int registrarSalida(String nfactura, String codigo, Date fecha, int cantidad, int precio, int total, int identify){
         int res=0;
         try {
             PS = CN.getConnection().prepareStatement(SQL_INSERT_SALIDA);
@@ -103,6 +124,7 @@ public class Cls_Salida {
             PS.setInt(4, cantidad);
             PS.setInt(5, precio);
             PS.setInt(6, total);
+            PS.setInt(7, identify);
             res = PS.executeUpdate();
             if(res > 0){
                 JOptionPane.showMessageDialog(null, "Salida realizada con éxito.");

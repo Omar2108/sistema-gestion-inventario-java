@@ -315,6 +315,7 @@ public class FormRegistro extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormRegistro.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
 

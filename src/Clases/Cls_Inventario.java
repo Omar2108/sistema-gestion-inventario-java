@@ -4,6 +4,7 @@ import Conexion.Conectar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Cls_Inventario {
@@ -41,6 +42,9 @@ public class Cls_Inventario {
             RS = PS.executeQuery();
             Object[] fila = new Object[5];
             while(RS.next()){
+                if (RS.getInt(5) <= 5) {
+                   JOptionPane.showMessageDialog(null, "¡El producto " + RS.getString(2) + " esta por agotarse, solo quedan " + RS.getInt(5) + " unidades disponible!"); 
+                }
                 fila[0] = RS.getString(1);
                 fila[1] = RS.getString(2);
                 fila[2] = RS.getInt(3);

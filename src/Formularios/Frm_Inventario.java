@@ -50,7 +50,7 @@ public class Frm_Inventario extends javax.swing.JInternalFrame {
         btnReporte = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Productos");
+        setTitle("Inventario");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

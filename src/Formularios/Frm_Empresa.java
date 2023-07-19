@@ -103,7 +103,7 @@ public class Frm_Empresa extends javax.swing.JInternalFrame {
 
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
-                JOptionPane.showMessageDialog(null, "Debe ingresar la fecha");
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         } else {
 
@@ -421,7 +421,7 @@ public class Frm_Empresa extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtb_empresa;
     public static javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_email;
-    private javax.swing.JTextField txt_nit;
+    public static javax.swing.JTextField txt_nit;
     public static javax.swing.JTextField txt_nombre;
     public static javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
